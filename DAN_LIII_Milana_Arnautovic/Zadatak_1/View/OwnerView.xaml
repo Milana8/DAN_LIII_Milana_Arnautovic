@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="OwnerView" Height="450" Width="800">
     <Grid>
-        
+
+        <Button
+                Content="Add Employee"
+                Command="{Binding AddEmployee}" 
+               Margin="140,53,484.6,305" Background="#545d6a" Foreground="White" FontSize="18" IsDefault="True" />
+        <Button
+                Content="Add Manager"
+                Command="{Binding AddManager}" 
+               Margin="140,187,484.6,171" Background="#545d6a" Foreground="White" FontSize="18" IsDefault="True"/>
+
     </Grid>
 </Window>

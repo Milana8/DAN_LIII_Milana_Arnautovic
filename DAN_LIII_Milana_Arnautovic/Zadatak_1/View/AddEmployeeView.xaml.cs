@@ -11,19 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Zadatak_1.ViewModel;
 
 namespace Zadatak_1.View
 {
     /// <summary>
-    /// Interaction logic for OwnerView.xaml
+    /// Interaction logic for AddEmployeeView.xaml
     /// </summary>
-    public partial class OwnerView : Window
+    public partial class AddEmployeeView : Window
     {
-        public OwnerView()
+        public AddEmployeeView()
         {
             InitializeComponent();
-            this.DataContext = new OwnerViewModel(this);
         }
     }
 }
