@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DAN_LIIIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblEmployees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HotelFloor" Type="int" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Citizenship" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Engagment" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblManagers">
+          <Key>
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="ManagerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HotelFloor" Type="int" Nullable="false" />
+          <Property Name="Exprience" Type="int" Nullable="false" />
+          <Property Name="Qualifications" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameSurname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pasword" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DAN_LIII.dbo.vwEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwEmployees">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="NameSurname" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Pasword" />
+            <PropertyRef Name="HotelFloor" />
+            <PropertyRef Name="Gender" />
+            <PropertyRef Name="Citizenship" />
+            <PropertyRef Name="Engagment" />
+            <PropertyRef Name="Salary" />
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="NameSurname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pasword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HotelFloor" Type="int" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Citizenship" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Engagment" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwManagers">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="NameSurname" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Pasword" />
+            <PropertyRef Name="HotelFloor" />
+            <PropertyRef Name="Exprience" />
+            <PropertyRef Name="Qualifications" />
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="NameSurname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pasword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HotelFloor" Type="int" Nullable="false" />
+          <Property Name="Exprience" Type="int" Nullable="false" />
+          <Property Name="Qualifications" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="ManagerID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblEmploy__UserI__3D5E1FD2">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblEmployees" Type="Self.tblEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblEmployees">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblManage__UserI__3E52440B">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblManagers" Type="Self.tblManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblManagers">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DAN_LIIIModelStoreContainer">
+          <EntitySet Name="tblEmployees" EntityType="Self.tblEmployees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblManagers" EntityType="Self.tblManagers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwEmployees" EntityType="Self.vwEmployees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwEmployees].[UserID] AS [UserID], 
+    [vwEmployees].[NameSurname] AS [NameSurname], 
+    [vwEmployees].[Email] AS [Email], 
+    [vwEmployees].[DateOfBirth] AS [DateOfBirth], 
+    [vwEmployees].[Username] AS [Username], 
+    [vwEmployees].[Pasword] AS [Pasword], 
+    [vwEmployees].[HotelFloor] AS [HotelFloor], 
+    [vwEmployees].[Gender] AS [Gender], 
+    [vwEmployees].[Citizenship] AS [Citizenship], 
+    [vwEmployees].[Engagment] AS [Engagment], 
+    [vwEmployees].[Salary] AS [Salary], 
+    [vwEmployees].[EmployeeID] AS [EmployeeID]
+    FROM [dbo].[vwEmployees] AS [vwEmployees]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwManagers" EntityType="Self.vwManagers" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwManagers].[UserID] AS [UserID], 
+    [vwManagers].[NameSurname] AS [NameSurname], 
+    [vwManagers].[Email] AS [Email], 
+    [vwManagers].[DateOfBirth] AS [DateOfBirth], 
+    [vwManagers].[Username] AS [Username], 
+    [vwManagers].[Pasword] AS [Pasword], 
+    [vwManagers].[HotelFloor] AS [HotelFloor], 
+    [vwManagers].[Exprience] AS [Exprience], 
+    [vwManagers].[Qualifications] AS [Qualifications], 
+    [vwManagers].[ManagerID] AS [ManagerID]
+    FROM [dbo].[vwManagers] AS [vwManagers]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tblEmploy__UserI__3D5E1FD2" Association="Self.FK__tblEmploy__UserI__3D5E1FD2">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblEmployees" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblManage__UserI__3E52440B" Association="Self.FK__tblManage__UserI__3E52440B">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblManagers" EntitySet="tblManagers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DAN_LIIIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HotelFloor" Type="Int32" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Citizenship" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Engagment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblEmploy__UserI__3D5E1FD2" FromRole="tblEmployees" ToRole="tblUsers" />
+        </EntityType>
+        <EntityType Name="tblManager">
+          <Key>
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="ManagerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HotelFloor" Type="Int32" Nullable="false" />
+          <Property Name="Exprience" Type="Int32" Nullable="false" />
+          <Property Name="Qualifications" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblManage__UserI__3E52440B" FromRole="tblManagers" ToRole="tblUsers" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pasword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblEmployees" Relationship="Self.FK__tblEmploy__UserI__3D5E1FD2" FromRole="tblUsers" ToRole="tblEmployees" />
+          <NavigationProperty Name="tblManagers" Relationship="Self.FK__tblManage__UserI__3E52440B" FromRole="tblUsers" ToRole="tblManagers" />
+        </EntityType>
+        <EntityType Name="vwEmployee">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="NameSurname" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Pasword" />
+            <PropertyRef Name="HotelFloor" />
+            <PropertyRef Name="Gender" />
+            <PropertyRef Name="Citizenship" />
+            <PropertyRef Name="Engagment" />
+            <PropertyRef Name="Salary" />
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="NameSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pasword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HotelFloor" Type="Int32" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Citizenship" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Engagment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwManager">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="NameSurname" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Pasword" />
+            <PropertyRef Name="HotelFloor" />
+            <PropertyRef Name="Exprience" />
+            <PropertyRef Name="Qualifications" />
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="NameSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pasword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HotelFloor" Type="Int32" Nullable="false" />
+          <Property Name="Exprience" Type="Int32" Nullable="false" />
+          <Property Name="Qualifications" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ManagerID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblEmploy__UserI__3D5E1FD2">
+          <End Role="tblUsers" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblEmployees" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblEmployees">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblManage__UserI__3E52440B">
+          <End Role="tblUsers" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblManagers" Type="Self.tblManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblManagers">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DAN_LIIIEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
+          <EntitySet Name="tblManagers" EntityType="Self.tblManager" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <EntitySet Name="vwEmployees" EntityType="Self.vwEmployee" />
+          <EntitySet Name="vwManagers" EntityType="Self.vwManager" />
+          <AssociationSet Name="FK__tblEmploy__UserI__3D5E1FD2" Association="Self.FK__tblEmploy__UserI__3D5E1FD2">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblEmployees" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblManage__UserI__3E52440B" Association="Self.FK__tblManage__UserI__3E52440B">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblManagers" EntitySet="tblManagers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DAN_LIIIModelStoreContainer" CdmEntityContainer="DAN_LIIIEntities">
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="DAN_LIIIModel.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="HotelFloor" ColumnName="HotelFloor" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+                <ScalarProperty Name="Engagment" ColumnName="Engagment" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblManagers">
+            <EntityTypeMapping TypeName="DAN_LIIIModel.tblManager">
+              <MappingFragment StoreEntitySet="tblManagers">
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="HotelFloor" ColumnName="HotelFloor" />
+                <ScalarProperty Name="Exprience" ColumnName="Exprience" />
+                <ScalarProperty Name="Qualifications" ColumnName="Qualifications" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="DAN_LIIIModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwEmployees">
+            <EntityTypeMapping TypeName="DAN_LIIIModel.vwEmployee">
+              <MappingFragment StoreEntitySet="vwEmployees">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+                <ScalarProperty Name="HotelFloor" ColumnName="HotelFloor" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+                <ScalarProperty Name="Engagment" ColumnName="Engagment" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwManagers">
+            <EntityTypeMapping TypeName="DAN_LIIIModel.vwManager">
+              <MappingFragment StoreEntitySet="vwManagers">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+                <ScalarProperty Name="HotelFloor" ColumnName="HotelFloor" />
+                <ScalarProperty Name="Exprience" ColumnName="Exprience" />
+                <ScalarProperty Name="Qualifications" ColumnName="Qualifications" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
