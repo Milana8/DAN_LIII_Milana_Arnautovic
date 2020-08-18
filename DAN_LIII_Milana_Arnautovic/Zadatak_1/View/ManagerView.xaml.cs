@@ -11,19 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Zadatak_1.ViewModel;
 
 namespace Zadatak_1.View
 {
     /// <summary>
-    /// Interaction logic for AddManagerView.xaml
+    /// Interaction logic for ManagerView.xaml
     /// </summary>
-    public partial class AddManagerView : Window
+    public partial class ManagerView : Window
     {
-        public AddManagerView()
+        public ManagerView()
         {
             InitializeComponent();
-            this.DataContext = new AddManagerViewModel(this);
         }
     }
 }

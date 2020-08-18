@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Zadatak_1.Command;
+using Zadatak_1.Model;
 using Zadatak_1.View;
 
 namespace Zadatak_1.ViewModel
@@ -15,6 +16,7 @@ namespace Zadatak_1.ViewModel
     class LoginViewModel : ViewModelBase
     {
         LoginView view;
+        Service service = new Service();
 
 
         #region Constructors
@@ -42,6 +44,32 @@ namespace Zadatak_1.ViewModel
                 OnPropertyChanged("UserName");
             }
         }
+
+        private vwManager manager;
+        public vwManager Manager
+        {
+            get
+            {
+                return manager;
+            }
+            set
+            {
+                manager = value;
+                OnPropertyChanged("Manager");
+            }
+        }
+
+        private List<vwManager> managerList;
+        public List<vwManager> ManagerList
+        {
+            get { return managerList; }
+            set
+            {
+                managerList = value;
+                OnPropertyChanged("ManagerList");
+            }
+        }
+
 
         #endregion
 
@@ -85,6 +113,15 @@ namespace Zadatak_1.ViewModel
                     OwnerView ow = new OwnerView();
                     view.Close();
                     ow.ShowDialog();
+                }
+
+                else if (service.IsUser(UserName))
+                {
+                    Manager = service.FindManager(UserName);
+                    ManagerView managerView = new AdministratorView();
+                    view.Close();
+                    managerView.ShowDialog();
+
                 }
 
 

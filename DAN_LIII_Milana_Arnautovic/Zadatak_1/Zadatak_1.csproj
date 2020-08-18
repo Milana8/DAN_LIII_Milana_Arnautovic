@@ -88,6 +88,8 @@
     <Compile Include="Model\tblUser.cs">
       <DependentUpon>DAN_LIII_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service.cs" />
+    <Compile Include="ViewModel\AddManagerViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\OwnerViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
