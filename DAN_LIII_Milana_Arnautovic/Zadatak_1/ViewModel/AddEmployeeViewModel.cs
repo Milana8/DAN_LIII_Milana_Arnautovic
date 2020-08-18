@@ -12,59 +12,59 @@ using Zadatak_1.View;
 
 namespace Zadatak_1.ViewModel
 {
-    class AddManagerViewModel: ViewModelBase
+    class AddEmployeeViewModel: ViewModelBase
     {
-        AddManagerView view;
+        AddEmployeeView eview;
         Service service = new Service();
 
-        public AddManagerViewModel(AddManagerView view )
+        public AddEmployeeViewModel(AddEmployeeView eview)
         {
-            this.view = view;
-            manager = new vwManager();
-            ManagerList = service.GetAllManagerView().ToList();
+            this.eview = eview;
+            employee = new vwEmployee();
+            EmployeeList = service.GetAllEmployeeView().ToList();
 
         }
         #region Properties
-        private vwManager manager;
-        public vwManager Manager
+        private vwEmployee employee;
+        public vwEmployee Employee
         {
             get
             {
-                return manager;
+                return employee;
             }
             set
             {
-                manager = value;
-                OnPropertyChanged("Manager");
+                employee = value;
+                OnPropertyChanged("Employee");
             }
         }
         #region Properties
-        private List<vwManager> managerList;
-        public List<vwManager> ManagerList
+        private List<vwEmployee> employeeList;
+        public List<vwEmployee> EmployeeList
         {
-            get { return managerList; }
+            get { return employeeList; }
             set
             {
-                managerList = value;
-                OnPropertyChanged("ManagerList");
+                employeeList = value;
+                OnPropertyChanged("EmployeeList");
             }
         }
 
 
 
         /// <summary>
-        /// Checks if its possible to execute the add and edit manager commands
+        /// Checks if its possible to execute the add and edit employee commands
         /// </summary>
-        private bool isUpdateManager;
-        public bool IsUpdateManager
+        private bool isUpdateEmployee;
+        public bool IsUpdateEmployee
         {
             get
             {
-                return isUpdateManager;
+                return isUpdateEmployee;
             }
             set
             {
-                isUpdateManager = value;
+                isUpdateEmployee = value;
             }
         }
         #endregion
@@ -111,17 +111,18 @@ namespace Zadatak_1.ViewModel
         /// </summary>
         private void SaveExecute()
         {
-            var result = MessageBox.Show("Are you sure you want to create this manager?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show("Are you sure you want to create this employee?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    service.AddManager(Manager);
-                    IsUpdateManager = true;
-                    service.GetAllManagerView().ToList();
-                    MessageBox.Show("You successfully created manager!", "Notification");
-                    view.Close();
+
+                    service.AddEmployee(Employee);
+                    IsUpdateEmployee = true;
+                    service.GetAllEmployeeView().ToList();
+                    MessageBox.Show("You successfully created employee!", "Notification");
+                    eview.Close();
                 }
                 catch (Exception ex)
                 {
@@ -140,17 +141,23 @@ namespace Zadatak_1.ViewModel
         /// <returns></returns>
         private bool CanSaveExecute()
         {
-
-            
+            if (service.CanCreateEmployee(employee))
+            {
                 return true;
-           
+            }
+            else
+            {
+                return false;
+            }
         }
+
+          
         /// <summary>
         /// Close execute
         /// </summary>
         private void CloseExecute()
         {
-            view.Close();
+            eview.Close();
         }
         /// <summary>
         /// Can close
@@ -163,4 +170,6 @@ namespace Zadatak_1.ViewModel
         #endregion
     }
 }
+    
+
     

@@ -154,5 +154,124 @@ namespace Zadatak_1
                 return false;
             }
         }
+
+        /// <summary>
+        /// Get all employee from db
+        /// </summary>
+        /// <returns></returns>
+        public List<tblEmployee> GetAllEmployees()
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    List<tblEmployee> list = new List<tblEmployee>();
+                    list = (from x in context.tblEmployees select x).ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        public List<vwEmployee> GetAllEmployeeView()
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    List<vwEmployee> list = new List<vwEmployee>();
+                    list = (from x in context.vwEmployees select x).ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        public bool AddEmployee(vwEmployee addemployee)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    tblUser user = new tblUser
+                    {
+                        DateOfBirth = addemployee.DateOfBirth,
+                        Email = addemployee.Email,
+                        NameSurname = addemployee.NameSurname,
+                        Pasword = addemployee.Pasword,
+                        Username = addemployee.Username
+                    };
+                    context.tblUsers.Add(user);
+                    context.SaveChanges();
+                    addemployee.UserID = user.UserID;
+                    tblEmployee employee = new tblEmployee
+                    {
+                        UserID = user.UserID,
+                        Citizenship = addemployee.Citizenship,
+                        Engagment = addemployee.Engagment,
+                        Gender = addemployee.Gender,
+                        HotelFloor = addemployee.HotelFloor,
+                    };
+                    context.tblEmployees.Add(employee);
+                    context.SaveChanges();
+                    addemployee.EmployeeID = employee.EmployeeID;
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return false;
+            }
+        }
+
+        public bool CanCreateEmployee(vwEmployee employee)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    
+                    var managers = context.vwManagers.Where(x => x.HotelFloor == employee.HotelFloor).FirstOrDefault();
+                    if (managers != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return false;
+            }
+        }
+        public vwEmployee FindEmployee(string username)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    vwEmployee employee = (from e in context.vwEmployees where e.Username == username select e).First();
+                    return employee;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
     }
 }

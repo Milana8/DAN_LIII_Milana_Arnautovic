@@ -118,7 +118,7 @@ namespace Zadatak_1.ViewModel
                 else if (service.IsUser(UserName))
                 {
                     Manager = service.FindManager(UserName);
-                    ManagerView managerView = new AdministratorView();
+                    ManagerView managerView = new ManagerView();
                     view.Close();
                     managerView.ShowDialog();
 
