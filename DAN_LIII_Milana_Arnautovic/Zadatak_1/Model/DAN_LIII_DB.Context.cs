@@ -25,9 +25,11 @@ namespace Zadatak_1.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tblAbsence> tblAbsences { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblManager> tblManagers { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<vwAbsence> vwAbsences { get; set; }
         public virtual DbSet<vwEmployee> vwEmployees { get; set; }
         public virtual DbSet<vwManager> vwManagers { get; set; }
     }

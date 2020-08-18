@@ -79,6 +79,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DAN_LIII_DB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\tblAbsence.cs">
+      <DependentUpon>DAN_LIII_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\tblEmployee.cs">
       <DependentUpon>DAN_LIII_DB.tt</DependentUpon>
     </Compile>
@@ -88,18 +91,21 @@
     <Compile Include="Model\tblUser.cs">
       <DependentUpon>DAN_LIII_DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Service.cs" />
-    <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
-    <Compile Include="ViewModel\AddManagerViewModel.cs" />
-    <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\OwnerViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="Model\vwAbsence.cs">
+      <DependentUpon>DAN_LIII_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\vwEmployee.cs">
       <DependentUpon>DAN_LIII_DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\vwManager.cs">
       <DependentUpon>DAN_LIII_DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service.cs" />
+    <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
+    <Compile Include="ViewModel\AddManagerViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\OwnerViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\AddEmployeeView.xaml.cs">
       <DependentUpon>AddEmployeeView.xaml</DependentUpon>
     </Compile>
@@ -192,19 +198,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Model\DAN_LIII_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DAN_LIII_DB.Context.cs</LastGenOutput>
       <DependentUpon>DAN_LIII_DB.edmx</DependentUpon>
+      <LastGenOutput>DAN_LIII_DB.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model\DAN_LIII_DB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DAN_LIII_DB.edmx</DependentUpon>
       <LastGenOutput>DAN_LIII_DB.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

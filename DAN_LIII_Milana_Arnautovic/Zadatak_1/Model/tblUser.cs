@@ -17,6 +17,7 @@ namespace Zadatak_1.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblUser()
         {
+            this.tblAbsences = new HashSet<tblAbsence>();
             this.tblEmployees = new HashSet<tblEmployee>();
             this.tblManagers = new HashSet<tblManager>();
         }
@@ -28,6 +29,8 @@ namespace Zadatak_1.Model
         public string Username { get; set; }
         public string Pasword { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAbsence> tblAbsences { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblEmployee> tblEmployees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

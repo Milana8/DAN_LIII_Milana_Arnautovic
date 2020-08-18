@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="DAN_LIIIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAbsence">
+          <Key>
+            <PropertyRef Name="AbsenceID" />
+          </Key>
+          <Property Name="AbsenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstDay" Type="date" Nullable="false" />
+          <Property Name="LastDay" Type="date" Nullable="false" />
+          <Property Name="Reason" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StatusRequest" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
         <EntityType Name="tblEmployees">
           <Key>
             <PropertyRef Name="EmployeeID" />
@@ -37,6 +48,27 @@
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Pasword" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DAN_LIII.dbo.vwAbsence' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAbsence">
+          <Key>
+            <PropertyRef Name="AbsenceID" />
+            <PropertyRef Name="FirstDay" />
+            <PropertyRef Name="LastDay" />
+            <PropertyRef Name="Reason" />
+            <PropertyRef Name="StatusRequest" />
+            <PropertyRef Name="Employee" />
+            <PropertyRef Name="HotelFloor" />
+          </Key>
+          <Property Name="AbsenceID" Type="int" Nullable="false" />
+          <Property Name="FirstDay" Type="date" Nullable="false" />
+          <Property Name="LastDay" Type="date" Nullable="false" />
+          <Property Name="Reason" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StatusRequest" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Employee" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="HotelFloor" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DAN_LIII.dbo.vwEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -92,7 +124,19 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
           <Property Name="Qualifications" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="ManagerID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__tblEmploy__UserI__3D5E1FD2">
+        <Association Name="FK__tblAbsenc__UserI__412EB0B6">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblAbsence" Type="Self.tblAbsence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblAbsence">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEmploy__UserI__3F466844">
           <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
           <End Role="tblEmployees" Type="Self.tblEmployees" Multiplicity="*" />
           <ReferentialConstraint>
@@ -104,7 +148,7 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblManage__UserI__3E52440B">
+        <Association Name="FK__tblManage__UserI__403A8C7D">
           <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
           <End Role="tblManagers" Type="Self.tblManagers" Multiplicity="*" />
           <ReferentialConstraint>
@@ -117,9 +161,22 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DAN_LIIIModelStoreContainer">
+          <EntitySet Name="tblAbsence" EntityType="Self.tblAbsence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEmployees" EntityType="Self.tblEmployees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblManagers" EntityType="Self.tblManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwAbsence" EntityType="Self.vwAbsence" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwAbsence].[AbsenceID] AS [AbsenceID], 
+    [vwAbsence].[FirstDay] AS [FirstDay], 
+    [vwAbsence].[LastDay] AS [LastDay], 
+    [vwAbsence].[Reason] AS [Reason], 
+    [vwAbsence].[StatusRequest] AS [StatusRequest], 
+    [vwAbsence].[UserID] AS [UserID], 
+    [vwAbsence].[Employee] AS [Employee], 
+    [vwAbsence].[HotelFloor] AS [HotelFloor]
+    FROM [dbo].[vwAbsence] AS [vwAbsence]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwEmployees" EntityType="Self.vwEmployees" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwEmployees].[UserID] AS [UserID], 
@@ -150,11 +207,15 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
     [vwManagers].[ManagerID] AS [ManagerID]
     FROM [dbo].[vwManagers] AS [vwManagers]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__tblEmploy__UserI__3D5E1FD2" Association="Self.FK__tblEmploy__UserI__3D5E1FD2">
+          <AssociationSet Name="FK__tblAbsenc__UserI__412EB0B6" Association="Self.FK__tblAbsenc__UserI__412EB0B6">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblAbsence" EntitySet="tblAbsence" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEmploy__UserI__3F466844" Association="Self.FK__tblEmploy__UserI__3F466844">
             <End Role="tblUsers" EntitySet="tblUsers" />
             <End Role="tblEmployees" EntitySet="tblEmployees" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblManage__UserI__3E52440B" Association="Self.FK__tblManage__UserI__3E52440B">
+          <AssociationSet Name="FK__tblManage__UserI__403A8C7D" Association="Self.FK__tblManage__UserI__403A8C7D">
             <End Role="tblUsers" EntitySet="tblUsers" />
             <End Role="tblManagers" EntitySet="tblManagers" />
           </AssociationSet>
@@ -164,6 +225,18 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DAN_LIIIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAbsence">
+          <Key>
+            <PropertyRef Name="AbsenceID" />
+          </Key>
+          <Property Name="AbsenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstDay" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LastDay" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StatusRequest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblAbsenc__UserI__412EB0B6" FromRole="tblAbsence" ToRole="tblUsers" />
+        </EntityType>
         <EntityType Name="tblEmployee">
           <Key>
             <PropertyRef Name="EmployeeID" />
@@ -175,7 +248,7 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
           <Property Name="Engagment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Salary" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" />
-          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblEmploy__UserI__3D5E1FD2" FromRole="tblEmployees" ToRole="tblUsers" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblEmploy__UserI__3F466844" FromRole="tblEmployees" ToRole="tblUsers" />
         </EntityType>
         <EntityType Name="tblManager">
           <Key>
@@ -186,7 +259,7 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
           <Property Name="Exprience" Type="Int32" Nullable="false" />
           <Property Name="Qualifications" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserID" Type="Int32" />
-          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblManage__UserI__3E52440B" FromRole="tblManagers" ToRole="tblUsers" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblManage__UserI__403A8C7D" FromRole="tblManagers" ToRole="tblUsers" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -198,8 +271,28 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Pasword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblEmployees" Relationship="Self.FK__tblEmploy__UserI__3D5E1FD2" FromRole="tblUsers" ToRole="tblEmployees" />
-          <NavigationProperty Name="tblManagers" Relationship="Self.FK__tblManage__UserI__3E52440B" FromRole="tblUsers" ToRole="tblManagers" />
+          <NavigationProperty Name="tblAbsences" Relationship="Self.FK__tblAbsenc__UserI__412EB0B6" FromRole="tblUsers" ToRole="tblAbsence" />
+          <NavigationProperty Name="tblEmployees" Relationship="Self.FK__tblEmploy__UserI__3F466844" FromRole="tblUsers" ToRole="tblEmployees" />
+          <NavigationProperty Name="tblManagers" Relationship="Self.FK__tblManage__UserI__403A8C7D" FromRole="tblUsers" ToRole="tblManagers" />
+        </EntityType>
+        <EntityType Name="vwAbsence">
+          <Key>
+            <PropertyRef Name="AbsenceID" />
+            <PropertyRef Name="FirstDay" />
+            <PropertyRef Name="LastDay" />
+            <PropertyRef Name="Reason" />
+            <PropertyRef Name="StatusRequest" />
+            <PropertyRef Name="Employee" />
+            <PropertyRef Name="HotelFloor" />
+          </Key>
+          <Property Name="AbsenceID" Type="Int32" Nullable="false" />
+          <Property Name="FirstDay" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LastDay" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StatusRequest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Employee" Type="String" MaxLength="101" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HotelFloor" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="vwEmployee">
           <Key>
@@ -251,7 +344,19 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
           <Property Name="Qualifications" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ManagerID" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK__tblEmploy__UserI__3D5E1FD2">
+        <Association Name="FK__tblAbsenc__UserI__412EB0B6">
+          <End Role="tblUsers" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblAbsence" Type="Self.tblAbsence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblAbsence">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblEmploy__UserI__3F466844">
           <End Role="tblUsers" Type="Self.tblUser" Multiplicity="0..1" />
           <End Role="tblEmployees" Type="Self.tblEmployee" Multiplicity="*" />
           <ReferentialConstraint>
@@ -263,7 +368,7 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblManage__UserI__3E52440B">
+        <Association Name="FK__tblManage__UserI__403A8C7D">
           <End Role="tblUsers" Type="Self.tblUser" Multiplicity="0..1" />
           <End Role="tblManagers" Type="Self.tblManager" Multiplicity="*" />
           <ReferentialConstraint>
@@ -276,16 +381,22 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DAN_LIIIEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAbsences" EntityType="Self.tblAbsence" />
           <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
           <EntitySet Name="tblManagers" EntityType="Self.tblManager" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <EntitySet Name="vwAbsences" EntityType="Self.vwAbsence" />
           <EntitySet Name="vwEmployees" EntityType="Self.vwEmployee" />
           <EntitySet Name="vwManagers" EntityType="Self.vwManager" />
-          <AssociationSet Name="FK__tblEmploy__UserI__3D5E1FD2" Association="Self.FK__tblEmploy__UserI__3D5E1FD2">
+          <AssociationSet Name="FK__tblAbsenc__UserI__412EB0B6" Association="Self.FK__tblAbsenc__UserI__412EB0B6">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblAbsence" EntitySet="tblAbsences" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblEmploy__UserI__3F466844" Association="Self.FK__tblEmploy__UserI__3F466844">
             <End Role="tblUsers" EntitySet="tblUsers" />
             <End Role="tblEmployees" EntitySet="tblEmployees" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblManage__UserI__3E52440B" Association="Self.FK__tblManage__UserI__3E52440B">
+          <AssociationSet Name="FK__tblManage__UserI__403A8C7D" Association="Self.FK__tblManage__UserI__403A8C7D">
             <End Role="tblUsers" EntitySet="tblUsers" />
             <End Role="tblManagers" EntitySet="tblManagers" />
           </AssociationSet>
@@ -296,6 +407,18 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DAN_LIIIModelStoreContainer" CdmEntityContainer="DAN_LIIIEntities">
+          <EntitySetMapping Name="tblAbsences">
+            <EntityTypeMapping TypeName="DAN_LIIIModel.tblAbsence">
+              <MappingFragment StoreEntitySet="tblAbsence">
+                <ScalarProperty Name="AbsenceID" ColumnName="AbsenceID" />
+                <ScalarProperty Name="FirstDay" ColumnName="FirstDay" />
+                <ScalarProperty Name="LastDay" ColumnName="LastDay" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="StatusRequest" ColumnName="StatusRequest" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblEmployees">
             <EntityTypeMapping TypeName="DAN_LIIIModel.tblEmployee">
               <MappingFragment StoreEntitySet="tblEmployees">
@@ -329,6 +452,20 @@ warning 6002: The table/view 'DAN_LIII.dbo.vwManagers' does not have a primary k
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAbsences">
+            <EntityTypeMapping TypeName="DAN_LIIIModel.vwAbsence">
+              <MappingFragment StoreEntitySet="vwAbsence">
+                <ScalarProperty Name="AbsenceID" ColumnName="AbsenceID" />
+                <ScalarProperty Name="FirstDay" ColumnName="FirstDay" />
+                <ScalarProperty Name="LastDay" ColumnName="LastDay" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="StatusRequest" ColumnName="StatusRequest" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+                <ScalarProperty Name="HotelFloor" ColumnName="HotelFloor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

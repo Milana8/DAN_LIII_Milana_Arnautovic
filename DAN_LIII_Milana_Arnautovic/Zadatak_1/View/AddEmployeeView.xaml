@@ -102,7 +102,7 @@
                  VerticalAlignment="Top"
                  Width="120"
                  Margin="205,75,0,0" 
-                Text="{Binding Employee.Citinzenship, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{Binding Employee.Citizenship, UpdateSourceTrigger=PropertyChanged}"/>
         <ComboBox HorizontalAlignment="Left"
                  Height="23"
                  VerticalAlignment="Top"
@@ -153,10 +153,10 @@
         </ComboBox>
 
         <Button Content="Save"
-                Command="{Binding Save,UpdateSourceTrigger=PropertyChanged}"  Margin="85,322,615.6,70" Background="#545d6a" Foreground="White" FontSize="12" IsDefault="True" />
+                Command="{Binding Save,UpdateSourceTrigger=PropertyChanged}"  Margin="78,354,622.6,38" Background="#545d6a" Foreground="White" FontSize="12" IsDefault="True" />
         <Button
                  Name="btnClose" Content="Close"  
-                Command="{Binding Close, UpdateSourceTrigger=PropertyChanged}"  Margin="295,322,405.6,70" Background="#545d6a" Foreground="White" FontSize="12" IsDefault="True"  />
+                Command="{Binding Close, UpdateSourceTrigger=PropertyChanged}"  Margin="289,354,411.6,38" Background="#545d6a" Foreground="White" FontSize="12" IsDefault="True"  />
 
     </Grid>
 </Window>

@@ -69,7 +69,30 @@ namespace Zadatak_1.ViewModel
                 OnPropertyChanged("ManagerList");
             }
         }
+        private vwEmployee employee;
+        public vwEmployee Employee
+        {
+            get
+            {
+                return employee;
+            }
+            set
+            {
+                employee = value;
+                OnPropertyChanged("Employee");
+            }
+        }
 
+        private List<vwEmployee> employeeList;
+        public List<vwEmployee> EmployeeList
+        {
+            get { return employeeList; }
+            set
+            {
+                employeeList = value;
+                OnPropertyChanged("EmployeeList");
+            }
+        }
 
         #endregion
 
@@ -121,6 +144,15 @@ namespace Zadatak_1.ViewModel
                     ManagerView managerView = new ManagerView();
                     view.Close();
                     managerView.ShowDialog();
+
+                }
+
+                else if (service.IsUser(UserName))
+                {
+                    Employee = service.FindEmployee(UserName);
+                    EmployeeView employeeView = new EmployeeView();
+                    view.Close();
+                    employeeView.ShowDialog();
 
                 }
 

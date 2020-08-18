@@ -219,6 +219,8 @@ namespace Zadatak_1
                         Engagment = addemployee.Engagment,
                         Gender = addemployee.Gender,
                         HotelFloor = addemployee.HotelFloor,
+                        
+
                     };
                     context.tblEmployees.Add(employee);
                     context.SaveChanges();
@@ -273,5 +275,107 @@ namespace Zadatak_1
                 return null;
             }
         }
+
+        public bool AddAbsence(vwAbsence absence)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    tblAbsence newAbsence = new tblAbsence
+                    {
+                        FirstDay = absence.FirstDay,
+                        LastDay = absence.LastDay,
+                        StatusRequest = "on hold",
+                        Reason = absence.Reason,
+                        UserID = absence.UserID
+                    };
+                    context.tblAbsences.Add(newAbsence);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return false;
+            }
+        }
+        
+        public List<vwAbsence> GetRequests(vwEmployee employee)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    return context.vwAbsences.Where(x => x.UserID == employee.UserID).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+       
+        public bool DeleteRequest(vwAbsence request)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    tblAbsence requestToDelete = context.tblAbsences.Where(x => x.AbsenceID == request.AbsenceID).FirstOrDefault();
+                    requestToDelete.StatusRequest = "deleted";
+                    requestToDelete.Reason = request.Reason;
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return false;
+            }
+        }
+        
+        public bool RejectRequest(vwAbsence request)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    tblAbsence requestToReject = context.tblAbsences.Where(x => x.AbsenceID == request.AbsenceID).FirstOrDefault();
+                    requestToReject.StatusRequest = "rejected";
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return false;
+            }
+        }
+        
+        public bool ApproveRequest(vwAbsence request)
+        {
+            try
+            {
+                using (DAN_LIIIEntities context = new DAN_LIIIEntities())
+                {
+                    tblAbsence requestToApprove = context.tblAbsences.Where(x => x.AbsenceID == request.AbsenceID).FirstOrDefault();
+                    requestToApprove.StatusRequest = "approved";
+                    context.SaveChanges();
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return false;
+            }
+        }
     }
 }
+  

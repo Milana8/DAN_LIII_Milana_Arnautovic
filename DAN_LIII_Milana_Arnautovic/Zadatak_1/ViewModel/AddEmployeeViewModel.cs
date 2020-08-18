@@ -107,7 +107,7 @@ namespace Zadatak_1.ViewModel
 
         #region Functions
         /// <summary>
-        /// Save execute- how to save admin
+        /// Save execute- how to save employee
         /// </summary>
         private void SaveExecute()
         {
@@ -117,7 +117,6 @@ namespace Zadatak_1.ViewModel
             {
                 try
                 {
-
                     service.AddEmployee(Employee);
                     IsUpdateEmployee = true;
                     service.GetAllEmployeeView().ToList();
@@ -134,7 +133,6 @@ namespace Zadatak_1.ViewModel
                 return;
             }
         }
-
         /// <summary>
         /// Can save
         /// </summary>
