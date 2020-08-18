@@ -17,5 +17,8 @@
                 Command="{Binding AddManager}" 
                Margin="140,187,484.6,171" Background="#545d6a" Foreground="White" FontSize="18" IsDefault="True"/>
 
+        <Button   Content="LogOut" Width="105" HorizontalAlignment="Right"
+                Command="{Binding LogOut, UpdateSourceTrigger=PropertyChanged}"  Margin="0,294,548.6,89" Background="#545d6a" Foreground="White" FontSize="14" IsDefault="True"/>
+
     </Grid>
 </Window>
